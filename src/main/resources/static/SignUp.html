@@ -1,0 +1,54 @@
+<!Doctype>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Save User</title>
+</head>
+<body>
+    <h1>Save User</h1>
+
+    <form id="userForm" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <button type="submit">Save User</button>
+    </form>
+<script>
+    document.getElementById("userForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    fetch('http://localhost:8080/users/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            username: username,
+            password: password
+        })
+    }).then(response => {
+    if(!response.ok){
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+}).then(data => {
+   alert('User saved successfully');
+   window.location.href = "/home.html";
+}).catch(error => {
+    console.error('Error:', error);
+});
+});
+</script>
+</body>
+</html>
