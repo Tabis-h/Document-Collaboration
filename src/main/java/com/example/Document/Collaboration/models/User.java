@@ -3,6 +3,9 @@ package com.example.Document.Collaboration.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -27,4 +30,8 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Document> documents = new ArrayList<>();
 }

@@ -30,7 +30,7 @@ public class DocumentController {
         return documentService.saveDocument(document, documentRequest.getUser_id());
     }
 
-    @GetMapping("/document")
+    @GetMapping("/document/{user_id}")
     public ResponseEntity<List<Document>> getDocument(){
         List<Document> documents=  documentService.getDocuments();
         return ResponseEntity.ok(documents);

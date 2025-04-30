@@ -1,5 +1,6 @@
 package com.example.Document.Collaboration.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,14 @@ public class Document {
     private String title;
 
     private String content;
+
+
+    @Getter
+    @Setter
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
+
+    private User user;
+
 }

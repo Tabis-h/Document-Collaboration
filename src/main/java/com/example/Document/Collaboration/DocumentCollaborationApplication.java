@@ -13,7 +13,7 @@ public class DocumentCollaborationApplication {
 
 	@RequestMapping("/")
 	public String home(){
-		return "Document Colabs";
+		return "Document Collaboration";
 
 	}
 

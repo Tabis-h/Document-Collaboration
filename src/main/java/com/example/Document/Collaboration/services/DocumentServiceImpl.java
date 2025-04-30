@@ -1,5 +1,6 @@
 package com.example.Document.Collaboration.services;
 
+import com.example.Document.Collaboration.DTO.DocumentRequest;
 import com.example.Document.Collaboration.models.Document;
 import com.example.Document.Collaboration.models.User;
 import com.example.Document.Collaboration.repositories.DocumentRepository;
@@ -11,11 +12,26 @@ import java.util.List;
 @Service
 public class DocumentServiceImpl implements DocumentService {
     @Autowired
-    DocumentRepository documentRepository;
+    private final DocumentRepository documentRepository;
+    private final UserRepository userRepository;
+
+    public DocumentServiceImpl(DocumentRepository documentRepository, UserRepository userRepository) {
+        this.documentRepository = documentRepository;
+        this.userRepository = userRepository;
+    }
+
 
     @Override
-    public Document saveDocument(Document document) {
-        return documentRepository.save(document);
+    public DocumentRequest saveDocument(Document document , Long user_id) {
+        User user = userRepository.findById(user_id).orElseThrow();
+        document.setUser(user);
+        Document savedDocument = documentRepository.save(document);
+        return  new DocumentRequest(
+                savedDocument.getId(),
+                savedDocument.getTitle(),
+                savedDocument.getContent(),
+                savedDocument.getUser().getId()
+        );
     }
 
     @Override
